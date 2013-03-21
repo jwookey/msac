@@ -70,10 +70,7 @@ nfiles = length(filenames) ;
 
 for ifile=1:nfiles
 %  read each file using msac_read
-
-   fname = char(filenames(ifile)) 
-   whos
-   fprintf('%s!\n',fname)
+   fname = char(filenames(ifile)) ;
    traces(ifile) = msac_read(fname) ;
 end
 
