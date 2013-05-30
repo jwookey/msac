@@ -117,7 +117,7 @@ end
            'unused17','leven','lpspol','lovrok','lcalda','unused18',...
            'kstnm','kevnm','khole','ko','ka','kt0','kt1','kt2','kt3',...
            'kt4','kt5','kt6','kt7','kt8','kt9','kf','kuser0','kuser1',...
-           'kuser2','kcmpnm','knetwk','kdatrd','kinst'} ;
+           'kuser2','kcmpnm','knetwk','kdatrd','kinst','reftime'} ;
    
    for i=[1:70]
       eval(sprintf('tr.%s = SAC_rnull ;',sachdrs{i})) ;
@@ -179,7 +179,7 @@ end
    for i=1:2:length(varargin)-1
 
 %     check that the header is valid
-      tmp = cell(1,133) ;
+      tmp = cell(1,length(sachdrs)) ;
       [tmp{:}] = deal(varargin{i}) ;
       index1 = strcmp(sachdrs,tmp) ;
       index2 = find(index1==1) ;
@@ -213,7 +213,7 @@ end
          eval(sprintf('tr.%s = varargin{i+1} ;',varargin{i})) ;
         
 %     CHARACTER HEADERS
-      elseif index2 > 110
+      elseif index2 > 110 & index2 <= 133
          if ~ischar(varargin{i+1})
             error('Header %s must take a string value',varargin{i})
          end
@@ -228,6 +228,22 @@ end
             warning('Header value for %s was truncated',varargin{i}) ;
          else
             eval(sprintf('tr.%s = varargin{i+1} ;',varargin{i})) ;
+         end
+      else % special headers
+         switch char(varargin{i})
+            case 'reftime'
+               reftime = varargin{i+1} ;
+               if ~isnumeric(reftime) | length(reftime)~=6
+                  error('REFTIME header value must be a 6-element vector')
+               end
+               tr.nzyear = reftime(1) ;
+               tr.nzjday = reftime(2) ;
+               tr.nzhour = reftime(3) ;
+               tr.nzmin = reftime(4) ;
+               tr.nzsec = reftime(5) ;
+               tr.nzmsec = reftime(6) ;
+         otherwise
+            error('Unknown special header %s',varargin{i})
          end
       end
    end
