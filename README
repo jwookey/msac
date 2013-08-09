@@ -12,6 +12,9 @@ The MATLAB SAC data handling functions (read, mread, write, mwrite, new) are des
 
 Please report bugs/problems to the email address above. 
 
+The latest version of the code is available from:
+   https://github.com/jwookey/msac
+
 --------------------------------------------------------------------------------
 
   This software is distributed under the term of the BSD free software license.
