@@ -47,7 +47,7 @@
 %
 %-------------------------------------------------------------------------------
 
-function [] = msac_mwrite(filenames,traces) ;
+function [] = msac_mwrite(filenames,traces) 
 
 nfiles = length(filenames) ;
 
